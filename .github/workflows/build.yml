@@ -26,11 +26,11 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./src/github.com/liamg/gitjacker
-        run: ./scripts/install.sh
+        run: sh "bash ./scripts/install.sh"
 
       - name: Build
         working-directory: ./src/github.com/liamg/gitjacker
-        run: ./scripts/build.sh
+        run: sh "bash ./scripts/build.sh"
 
       - name: Upload Gitjacker executables
         uses: actions/upload-artifact@v2
