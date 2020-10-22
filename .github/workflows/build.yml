@@ -1,0 +1,39 @@
+name: Build Gitjacker
+
+on: [push, pull_request]
+
+jobs:
+  build-mac-linux:
+    name: Build ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}
+    env:
+      GOPATH: ${{ github.workspace }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Setup repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+          path: ./src/github.com/liamg/gitjacker
+
+      - name: Setup go
+        uses: actions/setup-go@v2
+
+      - name: Install dependencies
+        working-directory: ./src/github.com/liamg/gitjacker
+        run: ./scripts/install.sh
+
+      - name: Build
+        working-directory: ./src/github.com/liamg/gitjacker
+        run: ./scripts/build.sh
+
+      - name: Upload Gitjacker executables
+        uses: actions/upload-artifact@v2
+        with:
+          name: gitjacker-nightly
+          path: bin/*
