@@ -23,9 +23,6 @@ jobs:
       - name: Setup go
         uses: actions/setup-go@v2
 
-      - name: Print go env
-        run: go env
-
       - name: Install dependencies
         run: ./scripts/install.sh
 
