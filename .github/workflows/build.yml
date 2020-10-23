@@ -3,16 +3,12 @@ name: Build Gitjacker
 on: [push, pull_request]
 
 jobs:
-  build-mac-linux:
-    name: Build ${{ matrix.os }}
+  build:
+    name: Build
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     env:
       GOPATH: ${{ github.workspace }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - name: Setup repository
@@ -31,11 +27,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
-      - name: Build Gitjacker
+      - name: Build
         working-directory: ./src/github.com/${{ github.repository }}
         run: make build
 
-      - name: Upload Gitjacker executables
+      - name: Upload executables
         uses: actions/upload-artifact@v2
         with:
           name: gitjacker-nightly
