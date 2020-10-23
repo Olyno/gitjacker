@@ -21,6 +21,7 @@ jobs:
         uses: actions/setup-go@v2
 
       - uses: actions/cache@v2
+        working-directory: ./src/github.com/${{ github.repository }}
         with:
           path: ~/go/pkg/mod
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
@@ -32,6 +33,7 @@ jobs:
         run: make build
 
       - name: Upload executables
+        working-directory: ./src/github.com/${{ github.repository }}
         uses: actions/upload-artifact@v2
         with:
           name: gitjacker-nightly
